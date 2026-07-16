@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          console.log('Fetching user from /api/auth/me with token:', token);
           const response = await fetch('http://localhost:5000/api/auth/me', {
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -22,7 +21,6 @@ export const AuthProvider = ({ children }) => {
           const userData = await response.json();
           const decoded = jwtDecode(token);
           setUser({ ...userData, token, isAdmin: decoded.role === 'admin' });
-          console.log('User set:', userData);
         } catch (error) {
           console.error('Failed to fetch user:', error);
           localStorage.removeItem('token');
@@ -37,7 +35,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      console.log('Logging in:', { email });
       const response = await login({ email, password });
       const { token, user: userData } = response;
       localStorage.setItem('token', token);
@@ -54,7 +51,6 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      console.log('Registering:', { name, email });
       const response = await register({ name, email, password });
       const { token, user: userData } = response;
       localStorage.setItem('token', token);
@@ -70,7 +66,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    console.log('Logging out');
     localStorage.removeItem('token');
     setUser(null);
     toast.info('Logged out');

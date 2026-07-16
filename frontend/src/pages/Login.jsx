@@ -13,11 +13,6 @@ function Login() {
   const { setToken } = useCart();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('Login component mounted');
-    return () => console.log('Login component unmounted');
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -35,16 +30,13 @@ function Login() {
     }
 
     try {
-      console.log('Logging in with:', { email });
       const response = await login({ email, password });
-      console.log('Login response:', response);
       if (!response.token) {
         throw new Error('No token received from server');
       }
       const { token } = response;
       localStorage.setItem('token', token);
       setToken(token);
-      console.log('Stored token:', token.slice(0, 10) + '...');
 
       const decoded = jwtDecode(token);
       const redirectPath = decoded.role === 'admin' ? '/admin' : '/';

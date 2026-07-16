@@ -33,7 +33,6 @@ export const CartProvider = ({ children }) => {
       if (!token) throw new Error('Please log in to add items to cart');
       await addToCart(token, productId, quantity);
       const updatedCart = await getCart(token); // Refetch cart
-      console.log('Refetched cart after add:', updatedCart);
       setCart({ ...updatedCart });
       return updatedCart;
     } catch (error) {
@@ -50,7 +49,6 @@ export const CartProvider = ({ children }) => {
       if (!token) throw new Error('Please log in to update cart');
       await updateCart(token, productId, quantity);
       const updatedCart = await getCart(token);
-      console.log('Refetched cart after update:', updatedCart);
       setCart({ ...updatedCart });
       return updatedCart;
     } catch (error) {
@@ -67,7 +65,6 @@ export const CartProvider = ({ children }) => {
       if (!token) throw new Error('Please log in to remove items from cart');
       await removeFromCart(token, productId);
       const updatedCart = await getCart(token);
-      console.log('Refetched cart after remove:', updatedCart);
       setCart({ ...updatedCart });
       return updatedCart;
     } catch (error) {

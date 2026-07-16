@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../lib/api';
-import { useCart } from '../context/CartContext';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../lib/api";
+import { useCart } from "../context/CartContext";
+import { toast } from "react-toastify";
 
 function Register() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { setToken } = useCart();
@@ -19,33 +19,33 @@ function Register() {
     setLoading(true);
 
     if (name.trim().length < 2) {
-      setError('Name must be at least 2 characters');
+      setError("Name must be at least 2 characters");
       setLoading(false);
       return;
     }
-    if (!email.includes('@') || !email.includes('.')) {
-      setError('Please enter a valid email address');
+    if (!email.includes("@") || !email.includes(".")) {
+      setError("Please enter a valid email address");
       setLoading(false);
       return;
     }
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError("Password must be at least 6 characters");
       setLoading(false);
       return;
     }
 
     try {
-      console.log('Registering with:', { name, email });
       const { token } = await register({ name, email, password });
-      console.log('Register token:', token);
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
       setToken(token);
-      toast.success('Registered successfully');
-      navigate('/');
+      toast.success("Registered successfully");
+      navigate("/");
     } catch (error) {
-      console.error('Register error:', error);
-      setError(error.message || 'Failed to register. Email may already be in use.');
-      toast.error(error.message || 'Failed to register');
+      console.error("Register error:", error);
+      setError(
+        error.message || "Failed to register. Email may already be in use.",
+      );
+      toast.error(error.message || "Failed to register");
     } finally {
       setLoading(false);
     }
@@ -53,10 +53,18 @@ function Register() {
 
   return (
     <div className="container mx-auto p-4 max-w-md">
-      <h1 className="text-3xl font-bold text-orange-600 mb-6 text-center">Register for YHA Shop</h1>
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
+      <h1 className="text-3xl font-bold text-orange-600 mb-6 text-center">
+        Register for YHA Shop
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-lg shadow-md p-6"
+      >
         <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
+          <label
+            htmlFor="name"
+            className="block text-gray-700 font-semibold mb-2"
+          >
             Name
           </label>
           <input
@@ -70,7 +78,10 @@ function Register() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
+          <label
+            htmlFor="email"
+            className="block text-gray-700 font-semibold mb-2"
+          >
             Email
           </label>
           <input
@@ -84,7 +95,10 @@ function Register() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
+          <label
+            htmlFor="password"
+            className="block text-gray-700 font-semibold mb-2"
+          >
             Password
           </label>
           <input
@@ -104,7 +118,7 @@ function Register() {
           type="submit"
           disabled={loading}
           className={`w-full bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors ${
-            loading ? 'opacity-50 cursor-not-allowed' : ''
+            loading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
           {loading ? (
@@ -127,12 +141,12 @@ function Register() {
               />
             </svg>
           ) : (
-            'Register'
+            "Register"
           )}
         </button>
       </form>
       <p className="mt-4 text-center text-gray-600">
-        Already have an account?{' '}
+        Already have an account?{" "}
         <Link to="/login" className="text-orange-500 hover:text-orange-600">
           Login
         </Link>

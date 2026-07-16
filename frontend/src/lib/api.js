@@ -4,7 +4,6 @@ const handleResponse = async (response) => {
   console.log(`Response status for ${response.url}: ${response.status}`);
   const contentType = response.headers.get('content-type');
   console.log(`Content-Type: ${contentType}`);
-
   if (!response.ok) {
     const text = await response.text();
     console.log(`Raw response: ${text.slice(0, 100)}...`);
@@ -47,14 +46,12 @@ export const getProducts = async () => {
 };
 
 export const getProduct = async (id) => {
-  console.log('Fetching product from:', `${API_URL}/products/${id}`);
   const response = await fetch(`${API_URL}/products/${id}`);
   return handleResponse(response);
 };
 
 // Reviews
 export const getReviews = async (productId) => {
-  console.log('Fetching reviews from:', `${API_URL}/reviews/${productId}`);
   const response = await fetch(`${API_URL}/reviews/${productId}`);
   return handleResponse(response);
 };
